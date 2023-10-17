@@ -1,6 +1,4 @@
 import ReactPdf from "@react-pdf/renderer";
-import moment from "moment/moment";
-import Logo from '../../assets/images/sidebar/logo.png'
 import RegularDejavu from './DejaVuSans.ttf'
 import BoldDejavu from './DejaVuSans-Bold.ttf'
 import ItalicDejavu from './DejaVuSerif-Italic.ttf'
@@ -109,22 +107,18 @@ const PDFTemplate = ({item, inputValues, examinations, selectedExaminations}) =>
             <ReactPdf.Page size="A4" style={styles.page}>
                 <ReactPdf.View style={styles.section}>
                     <ReactPdf.Text style={styles.header}>
-                        <ReactPdf.Image style={{
-                            width: 200,
-                            height: 30,
-                            marginLeft: 80
-                        }} src={Logo}/>
+                        {process.env.REACT_APP_COMPANY_NAME}
                     </ReactPdf.Text>
                 </ReactPdf.View>
                 <ReactPdf.View style={styles.footer}>
-                    <ReactPdf.Text style={styles.dividerText}>
-                        Bakı şəh, Bakıxanov qəs, S.Mehmandarov 8. {'\n'} Tel:+994 99 425 11 99 , +994 70 525 11 99,
-                        +994 12 425 64 94, +994 12 425 11 99.
-                    </ReactPdf.Text>
-                    <ReactPdf.View style={styles.divider}/>
-                    <ReactPdf.Text style={styles.dividerText}>
-                        {moment(new Date()).format('DD.MM.YYYY HH:mm:ss')}
-                    </ReactPdf.Text>
+                    {/*<ReactPdf.Text style={styles.dividerText}>*/}
+                    {/*    Bakı şəh, Bakıxanov qəs, S.Mehmandarov 8. {'\n'} Tel:+994 99 425 11 99 , +994 70 525 11 99,*/}
+                    {/*    +994 12 425 64 94, +994 12 425 11 99.*/}
+                    {/*</ReactPdf.Text>*/}
+                    {/*<ReactPdf.View style={styles.divider}/>*/}
+                    {/*<ReactPdf.Text style={styles.dividerText}>*/}
+                    {/*    {moment(new Date()).format('DD.MM.YYYY HH:mm:ss')}*/}
+                    {/*</ReactPdf.Text>*/}
                 </ReactPdf.View>
                 <ReactPdf.View style={{flexDirection: 'column'}}>
                     <ReactPdf.Text>

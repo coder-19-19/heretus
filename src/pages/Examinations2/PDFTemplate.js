@@ -1,5 +1,4 @@
 import ReactPdf from "@react-pdf/renderer";
-import Logo from '../../assets/images/sidebar/logo.png'
 import RegularDejavu from '../Cashbox/DejaVuSans.ttf'
 import BoldDejavu from '../Cashbox/DejaVuSans-Bold.ttf'
 import ItalicDejavu from '../Cashbox/DejaVuSerif-Italic.ttf'
@@ -109,11 +108,7 @@ const PDFTemplate = ({item, examinations, selectedExaminations, totals}) => {
             <ReactPdf.Page size="A4" style={styles.page}>
                 <ReactPdf.View style={styles.section}>
                     <ReactPdf.Text style={styles.header}>
-                        <ReactPdf.Image style={{
-                            width: 200,
-                            height: 30,
-                            marginLeft: 80
-                        }} src={Logo}/>
+                        {process.env.REACT_APP_COMPANY_NAME}
                     </ReactPdf.Text>
                 </ReactPdf.View>
                 <ReactPdf.View style={styles.table}>
