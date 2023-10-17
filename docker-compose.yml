@@ -1,0 +1,16 @@
+version: '3.1'
+
+services:
+  app:
+    build: .
+    image: medilife-admin-image
+    container_name: medilife-admin
+    restart: always
+    ports:
+      - "3003:80"
+    networks:
+      - proxynet
+
+networks:
+  proxynet:
+    external: true
