@@ -90,7 +90,7 @@ const Examinations = () => {
                                             <tr>
                                                 <th>№</th>
                                                 <th>Müştəri</th>
-                                                <th>Həkim</th>
+                                                <th>Nümayəndə</th>
                                                 <th>Göndərən şəxs</th>
                                                 <th>Xidmət</th>
                                                 <th>Say</th>

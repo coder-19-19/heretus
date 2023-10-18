@@ -138,7 +138,7 @@ const Add = ({fetchData, form, setForm}) => {
                             {FormHelper.generateFormFeedback(errors, 'worker_id')}
                         </div>
                         <div className="mb-3">
-                            <Label for="doctor_id">Götürən həkim</Label>
+                            <Label for="doctor_id">Götürən Nümayəndə</Label>
                             <Controller rules={{required: true}} render={({field: {value, onChange}}) => (
                                 <Select
                                     options={doctors}

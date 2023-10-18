@@ -123,7 +123,7 @@ const Examinations = () => {
                                         </Col>
                                         <Col sm={12} md={3}>
                                             <div className="mb-3">
-                                                <Label for="doctorId">Həkim</Label>
+                                                <Label for="doctorId">Nümayəndə</Label>
                                                 <Controller name="doctorId"
                                                             control={control}
                                                             render={({field: {value, onChange}}) => (
@@ -210,7 +210,7 @@ const Examinations = () => {
                                                 <tr>
                                                     <th>№</th>
                                                     <th>Müştəri</th>
-                                                    <th>Həkim</th>
+                                                    <th>Nümayəndə</th>
                                                     <th>Göndərən şəxs</th>
                                                     <th>Xidmət</th>
                                                     <th>Say</th>

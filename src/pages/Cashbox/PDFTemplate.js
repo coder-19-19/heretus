@@ -151,7 +151,7 @@ const PDFTemplate = ({item, inputValues, examinations, selectedExaminations}) =>
                     <ReactPdf.View style={styles.tableHeaderRow}>
                         <ReactPdf.Text style={[styles.tableHeaderCell, {width: '4%'}]}>№</ReactPdf.Text>
                         <ReactPdf.Text style={styles.tableHeaderCell}>Göndərən şəxs</ReactPdf.Text>
-                        <ReactPdf.Text style={styles.tableHeaderCell}>Həkim</ReactPdf.Text>
+                        <ReactPdf.Text style={styles.tableHeaderCell}>Nümayəndə</ReactPdf.Text>
                         <ReactPdf.Text style={styles.tableHeaderCell}>Qeydiyyatçı</ReactPdf.Text>
                         <ReactPdf.Text style={styles.tableHeaderCell}>Xidmət</ReactPdf.Text>
                         <ReactPdf.Text style={styles.tableHeaderCell}>Qiymət</ReactPdf.Text>

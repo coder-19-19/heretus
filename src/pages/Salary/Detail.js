@@ -16,7 +16,7 @@ const Detail = ({setActive, data}) => {
                                 <tr>
                                     <th>№</th>
                                     <th>Müştəri</th>
-                                    <th>Həkim</th>
+                                    <th>Nümayəndə</th>
                                     <th>Göndərən şəxs</th>
                                     <th>Xidmət</th>
                                     <th>Ödənilən məbləğ</th>
@@ -86,7 +86,7 @@ const Detail = ({setActive, data}) => {
                                 <tr>
                                     <th>№</th>
                                     <th>Müştəri</th>
-                                    <th>Həkim</th>
+                                    <th>Nümayəndə</th>
                                     <th>Göndərən şəxs</th>
                                     <th>Xidmət</th>
                                     <th>Ödənilən məbləğ</th>

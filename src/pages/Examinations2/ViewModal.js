@@ -124,7 +124,7 @@ const ViewModal = ({modal, setModal}) => {
                                 <Row>
                                     <Col sm={12} md={4}>
                                         <div className="mb-3">
-                                            <Label for="doctor">Həkim</Label>
+                                            <Label for="doctor">Nümayəndə</Label>
                                             <Controller name="doctor"
                                                         control={control}
                                                         render={({field: {value, onChange}}) => (
@@ -250,7 +250,7 @@ const ViewModal = ({modal, setModal}) => {
                                                         </div>
                                                     </Label>
                                                 </th>
-                                                <th>Həkim</th>
+                                                <th>Nümayəndə</th>
                                                 <th>Göndərən şəxs</th>
                                                 <th>Xidmət</th>
                                                 <th>Say</th>

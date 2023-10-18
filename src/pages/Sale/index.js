@@ -73,7 +73,7 @@ const Sale = () => {
                                                 <th>Anbardar</th>
                                                 <th>Şöbə</th>
                                                 <th>Götürən işçi</th>
-                                                <th>Götürən həkim</th>
+                                                <th>Götürən Nümayəndə</th>
                                                 <th>Tarix</th>
                                                 <th>Qeyd</th>
                                                 <th/>
