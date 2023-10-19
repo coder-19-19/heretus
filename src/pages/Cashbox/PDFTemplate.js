@@ -129,21 +129,12 @@ const PDFTemplate = ({item, inputValues, examinations, selectedExaminations}) =>
                             {data?.[0]?.patient}
                         </ReactPdf.Text>
                     </ReactPdf.Text>
-                    <ReactPdf.Text>
-                        <ReactPdf.Text style={{fontWeight: 'bold'}}>
-                            Doğum
-                            tarixi:{' '}
-                        </ReactPdf.Text>
-                        <ReactPdf.Text style={{fontStyle: 'italic'}}>
-                            {data?.[0]?.patient_birth} ({data?.[0]?.patient_fin_code})
-                        </ReactPdf.Text>
-                    </ReactPdf.Text>
                     <ReactPdf.Text style={{marginTop: 2}}>
                         <ReactPdf.Text style={{fontWeight: 'bold'}}>
                             Tel:{' '}
                         </ReactPdf.Text>
                         <ReactPdf.Text style={{fontStyle: 'italic'}}>
-                            {data?.[0]?.patient_mobile_phone}
+                            {data?.[0]?.phone}
                         </ReactPdf.Text>
                     </ReactPdf.Text>
                 </ReactPdf.View>
@@ -152,7 +143,6 @@ const PDFTemplate = ({item, inputValues, examinations, selectedExaminations}) =>
                         <ReactPdf.Text style={[styles.tableHeaderCell, {width: '4%'}]}>№</ReactPdf.Text>
                         <ReactPdf.Text style={styles.tableHeaderCell}>Göndərən şəxs</ReactPdf.Text>
                         <ReactPdf.Text style={styles.tableHeaderCell}>Nümayəndə</ReactPdf.Text>
-                        <ReactPdf.Text style={styles.tableHeaderCell}>Qeydiyyatçı</ReactPdf.Text>
                         <ReactPdf.Text style={styles.tableHeaderCell}>Xidmət</ReactPdf.Text>
                         <ReactPdf.Text style={styles.tableHeaderCell}>Qiymət</ReactPdf.Text>
                         <ReactPdf.Text style={styles.tableHeaderCell}>Ödəniş</ReactPdf.Text>
@@ -163,7 +153,6 @@ const PDFTemplate = ({item, inputValues, examinations, selectedExaminations}) =>
                             <ReactPdf.Text style={[styles.tableCell, {width: '4%'}]}>{index + 1}</ReactPdf.Text>
                             <ReactPdf.Text style={styles.tableCell}>{patient?.worker}</ReactPdf.Text>
                             <ReactPdf.Text style={styles.tableCell}>{patient?.doctor}</ReactPdf.Text>
-                            <ReactPdf.Text style={styles.tableCell}>{patient?.creator}</ReactPdf.Text>
                             <ReactPdf.Text style={styles.tableCell}>{patient?.service}</ReactPdf.Text>
                             <ReactPdf.Text style={styles.tableCell}>{patient?.final_price}</ReactPdf.Text>
                             <ReactPdf.Text style={styles.tableCell}>{patient?.payment}</ReactPdf.Text>

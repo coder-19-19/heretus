@@ -30,6 +30,7 @@ import Select from "react-select";
 import PDFTemplate from "./PDFTemplate";
 import Kassam from "../../api/kassam";
 import Can from "../../components/Common/Can";
+import Customers from "../../api/customers";
 
 const Branches = () => {
     document.title = 'Kassa'
@@ -94,7 +95,7 @@ const Branches = () => {
         setIsFetching(false)
     }
     const fetchPatients = async () => {
-        const {data} = await Patients.getSelect()
+        const {data} = await Customers.getSelect()
         setPatients(data)
     }
 

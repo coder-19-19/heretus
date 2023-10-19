@@ -145,7 +145,6 @@ const Add = ({fetchData, form, setForm}) => {
                                 <div className="mb-3">
                                     <Label className="form-label">Kod</Label>
                                     <Controller rules={{
-                                        required: true,
                                         maxLength: {
                                             value: 4,
                                             message: 'Maksimum 4 simovaldan ibarət olmalıdır'

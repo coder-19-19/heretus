@@ -23,6 +23,7 @@ import Dashboard from "../pages/Dashboard";
 import Examinations2 from "../pages/Examinations2";
 import Companies from "../pages/Companies";
 import Customers from "../pages/Customers";
+import Invoice from "../pages/Invoice";
 
 
 const authProtectedRoutes = [
@@ -114,6 +115,14 @@ const authProtectedRoutes = [
         menu: 'operations',
         icon: 'coins',
         can: 'examinationPayment_view'
+    },
+    {
+        path: "invoice",
+        component: <Invoice/>,
+        title: 'Faktura',
+        menu: 'operations',
+        icon: 'file-invoice',
+        can: 'invoice_view'
     },
     {
         path: "product-types",

@@ -24,6 +24,7 @@ import moment from "moment";
 import CustomPagination from "../../components/CustomPagination";
 import ViewModal from "./ViewModal";
 import PDFTemplate from "./PDFTemplate";
+import Customers from "../../api/customers";
 
 const Examinations2 = () => {
     document.title = 'Xidmətlər və Məhsullar 2'
@@ -83,7 +84,7 @@ const Examinations2 = () => {
     }
 
     const fetchPatients = async () => {
-        const {data} = await Patients.getSelect()
+        const {data} = await Customers.getSelect()
         setPatients(data)
     }
 
