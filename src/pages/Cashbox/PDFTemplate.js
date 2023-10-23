@@ -129,14 +129,16 @@ const PDFTemplate = ({item, inputValues, examinations, selectedExaminations}) =>
                             {data?.[0]?.patient}
                         </ReactPdf.Text>
                     </ReactPdf.Text>
-                    <ReactPdf.Text style={{marginTop: 2}}>
-                        <ReactPdf.Text style={{fontWeight: 'bold'}}>
-                            Tel:{' '}
+                    {data?.[0]?.phone && (
+                        <ReactPdf.Text style={{marginTop: 2}}>
+                            <ReactPdf.Text style={{fontWeight: 'bold'}}>
+                                Tel:{' '}
+                            </ReactPdf.Text>
+                            <ReactPdf.Text style={{fontStyle: 'italic'}}>
+                                {data?.[0]?.phone}
+                            </ReactPdf.Text>
                         </ReactPdf.Text>
-                        <ReactPdf.Text style={{fontStyle: 'italic'}}>
-                            {data?.[0]?.phone}
-                        </ReactPdf.Text>
-                    </ReactPdf.Text>
+                    )}
                 </ReactPdf.View>
                 <ReactPdf.View style={styles.table}>
                     <ReactPdf.View style={styles.tableHeaderRow}>

@@ -7,10 +7,10 @@ import moment from "moment";
 import {Controller, useForm} from "react-hook-form";
 import Employees from "../../api/employees";
 import Missions from "../../api/missions";
-import Patients from "../../api/patients";
 import ExaminationsApi from "../../api/examinations";
 import CustomPagination from "../../components/CustomPagination";
 import Select from "react-select";
+import Customers from "../../api/customers";
 
 const Examinations = () => {
     document.title = 'Xidmətlər və Məhsullar'
@@ -47,7 +47,7 @@ const Examinations = () => {
     }
 
     const fetchPatients = async () => {
-        const {data} = await Patients.getSelect()
+        const {data} = await Customers.getSelect()
         setPatients(data)
     }
 
@@ -71,7 +71,8 @@ const Examinations = () => {
             patient_id: patientId?.value || null,
             doctor_id: doctorId?.value || null,
             worker_id: senderDoctorId?.value || null,
-            service_id: missionId?.value || null,
+            service_id: missionId?.value2 || null,
+            is_product: missionId?.is_product,
             page: p || page
         })
         setExaminations(data?.data)

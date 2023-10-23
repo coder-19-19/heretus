@@ -175,7 +175,7 @@ const SidebarContent = props => {
                                 </ul>
                             </li>
                         )}
-                        {(actions?.examination_add || actions?.invoice_view || actions?.examinationPayment_view || actions?.salary_view) && (
+                        {(actions?.examination_add || actions?.outside_work_view || actions?.invoice_view || actions?.examinationPayment_view || actions?.salary_view) && (
                             <li>
                                 <Link to="/#" className="has-arrow">
                                     <i className="text-light fa fa-spinner"></i>

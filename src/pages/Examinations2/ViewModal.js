@@ -59,7 +59,8 @@ const ViewModal = ({modal, setModal}) => {
             ...query ? query : {
                 doctor_id: doctorId?.value || null,
                 worker_id: senderDoctorId?.value || null,
-                service_id: missionId?.value || null,
+                service_id: missionId?.value2 || null,
+                is_product: missionId?.is_product,
                 page: p || null
             }
         })
@@ -112,7 +113,7 @@ const ViewModal = ({modal, setModal}) => {
         if (data) {
             fetchAllData()
         }
-    }, data)
+    }, [data])
 
     return (
         <>

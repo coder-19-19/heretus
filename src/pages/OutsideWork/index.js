@@ -1,7 +1,7 @@
 import ConfirmModal from "components/Common/ConfirmModal";
 import Breadcrumbs from "components/Common/Breadcrumb";
 import {useEffect, useState} from "react";
-import Api from 'api/purchase'
+import Api from 'api/outside-work'
 
 import {Button, Card, CardBody, Col, Modal, ModalHeader, Row, Spinner, UncontrolledTooltip} from "reactstrap";
 import Add from "./Add";
@@ -9,8 +9,8 @@ import CustomPagination from "../../components/CustomPagination";
 import Can from "../../components/Common/Can";
 import moment from "moment";
 
-const Branches = () => {
-    document.title = 'Mədaxil'
+const OutsideWork = () => {
+    document.title = 'Kənar işçilik'
     const [confirmModal, setConfirmModal] = useState(false)
     const [form, setForm] = useState({})
     const [data, setData] = useState([])
@@ -26,7 +26,7 @@ const Branches = () => {
     const fetchData = async (showLoader = true) => {
         setIsFetching(showLoader)
         const data = await Api.get({page})
-        setData(data?.data?.transactions)
+        setData(data?.data?.works)
         setTotal(data?.meta?.total)
         setIsFetching(false)
     }
@@ -38,14 +38,14 @@ const Branches = () => {
     return (
         <div className="page-content">
             <ConfirmModal active={confirmModal} setActive={setConfirmModal} callback={deleteData}/>
-            <Modal size="lg" className="modal-dialog-centered" isOpen={form?.status}
+            <Modal className="modal-dialog-centered" isOpen={form?.status}
                    toggle={() => setForm({})}>
                 <ModalHeader
                     toggle={() => setForm({})}>{form?.data ? 'Düzəliş et' : 'Əlavə et'}</ModalHeader>
                 <Add fetchData={fetchData} form={form} setForm={setForm}/>
             </Modal>
             <div className="container-fluid">
-                <Breadcrumbs breadcrumbItem={`MƏDAXİL (${total})`}/>
+                <Breadcrumbs breadcrumbItem={`KƏNAR İŞÇİLİK (${total})`}/>
                 <Row>
                     <Col sm={12}>
                         <Card>
@@ -55,7 +55,7 @@ const Branches = () => {
                                 </div>
                             ) : (
                                 <CardBody>
-                                    <Can action="purchase_add">
+                                    <Can action="outside_work_add">
                                         <Button
                                             onClick={() => setForm({status: true})}
                                             type="button"
@@ -70,10 +70,11 @@ const Branches = () => {
                                             <thead>
                                             <tr>
                                                 <th>№</th>
-                                                <th>Təhcizatçı</th>
-                                                <th>İşçi</th>
-                                                <th>Ümumi qiymət</th>
-                                                <th>Tarix</th>
+                                                <th>Fayl</th>
+                                                <th>Məxaric</th>
+                                                <th>Mədxail</th>
+                                                <th>Mənfəət</th>
+                                                <th>Yaradılma tarixi</th>
                                                 <th>Qeyd</th>
                                                 <th/>
                                             </tr>
@@ -82,28 +83,18 @@ const Branches = () => {
                                             {data.map((item, index) => (
                                                 <tr key={item.id}>
                                                     <td>{index + 1}</td>
-                                                    <td>{item.supplier_name}</td>
-                                                    <td>{item.worker_name} {item.worker_surname}</td>
-                                                    <td>{item.total_amount}</td>
-                                                    <td>{item?.created_at && moment(item.created_at).format('DD.MM.YYYY')}</td>
+                                                    <td>
+                                                        <a target="_blank"
+                                                           href={`${process.env.REACT_APP_FILE_URL}${item.file}`}>Fayl</a>
+                                                    </td>
+                                                    <td>{item.expense}</td>
+                                                    <td>{item.income}</td>
+                                                    <td>{item.benefit}</td>
+                                                    <td>{moment(item?.created_at).format('DD.MM.YYYY HH:mm')}</td>
                                                     <td>{item.note}</td>
                                                     <td>
                                                         <div className="d-flex align-items-center gap-1">
-                                                            <Can action="purchase_edit">
-                                                                <Button color="success"
-                                                                        id={`edit-${item.id}`}
-                                                                        onClick={() => setForm({
-                                                                            status: true,
-                                                                            data: item
-                                                                        })}>
-                                                                    <i className="bx bx-pencil"/>
-                                                                </Button>
-                                                                <UncontrolledTooltip target={`edit-${item.id}`}
-                                                                                     placement="bottom">
-                                                                    Düzəliş et
-                                                                </UncontrolledTooltip>
-                                                            </Can>
-                                                            <Can action="purchase_delete">
+                                                            <Can action="outside_work_delete">
                                                                 <Button color="danger"
                                                                         id={`delete-${item.id}`}
                                                                         onClick={() => setConfirmModal(item.id)}>
@@ -132,4 +123,4 @@ const Branches = () => {
     )
 }
 
-export default Branches
+export default OutsideWork

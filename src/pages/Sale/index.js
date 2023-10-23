@@ -87,7 +87,7 @@ const Sale = () => {
                                                     <td>{item.department_name}</td>
                                                     <td>{item.worker_name} {item.worker_surname}</td>
                                                     <td>{item.doctor_name} {item.doctor_surname}</td>
-                                                    <td>{item?.createdAt && moment(item.createdAt).format('DD.MM.YYYY')}</td>
+                                                    <td>{item?.created_at && moment(item.created_at).format('DD.MM.YYYY')}</td>
                                                     <td>{item.note}</td>
                                                     <td>
                                                         <div className="d-flex align-items-center gap-1">

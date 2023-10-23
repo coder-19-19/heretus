@@ -24,6 +24,7 @@ import Examinations2 from "../pages/Examinations2";
 import Companies from "../pages/Companies";
 import Customers from "../pages/Customers";
 import Invoice from "../pages/Invoice";
+import OutsideWork from "../pages/OutsideWork";
 
 
 const authProtectedRoutes = [
@@ -123,6 +124,14 @@ const authProtectedRoutes = [
         menu: 'operations',
         icon: 'file-invoice',
         can: 'invoice_view'
+    },
+    {
+        path: "outside-work",
+        component: <OutsideWork/>,
+        title: 'Kənar işçilik',
+        menu: 'operations',
+        icon: 'users',
+        can: 'outside_work_view'
     },
     {
         path: "product-types",

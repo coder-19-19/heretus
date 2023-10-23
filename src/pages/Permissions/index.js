@@ -80,7 +80,7 @@ const Permissions = () => {
                                                 <tr key={item.id}>
                                                     <td>{index + 1}</td>
                                                     <td>{item.name}</td>
-                                                    <td>{moment(item.createdAt).format('DD.MM.YYYY')}</td>
+                                                    <td>{moment(item.created_at).format('DD.MM.YYYY')}</td>
                                                     <td>
                                                         <div className="d-flex align-items-center gap-1">
                                                             <Can action="role_edit">

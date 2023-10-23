@@ -8,19 +8,34 @@ import Customers from "../../api/customers";
 import Missions from "../../api/missions";
 import Select from "react-select";
 import PDFTemplate from "./PDFTemplate";
+import moment from "moment";
 
 const Add = ({fetchData, form, setForm}) => {
-    const {control, watch, handleSubmit, setValue, setError, formState: {errors}} = useForm()
+    const {control, watch, handleSubmit, setValue, setError, formState: {errors}} = useForm({
+        defaultValues: {
+            code: moment(new Date()).format('YYYYMMDDHHmmss')
+        }
+    })
     const [loader, setLoader] = useState(false)
     const data = form?.data
     const [companies, setCompanies] = useState([])
     const [customers, setCustomers] = useState([])
     const [services, setServices] = useState([])
+    const [pdf, setPdf] = useState(null)
 
     const submit = async values => {
         setLoader(true)
         try {
-            await Api[values?.id ? 'update' : 'add'](values)
+            const formData = new FormData()
+            formData.append('code', values?.code)
+            formData.append('company_id', values?.company_id?.value)
+            formData.append('customer_id', values?.customer_id?.value)
+            formData.append('product_id', values?.product_id?.value2)
+            formData.append('is_product', values?.product_id?.is_product)
+            formData.append('quantity', values?.quantity)
+            formData.append('price', values?.price)
+            formData.append('pdf', pdf)
+            await Api[values?.id ? 'update' : 'add'](formData)
             fetchData()
             setForm({})
         } catch (e) {
@@ -44,7 +59,6 @@ const Add = ({fetchData, form, setForm}) => {
         const {data} = await Missions.getSelect()
         setServices(data)
     }
-
     useEffect(() => {
         if (data && companies.length && customers.length && services.length) {
             setValue('id', data.id)
@@ -159,8 +173,8 @@ const Add = ({fetchData, form, setForm}) => {
             </ModalBody>
             <ModalFooter>
                 <div className="d-flex justify-content-end gap-1">
-                    <PDFTemplate data={watch()} disabled={false}/>
                     <Button outline type="button" onClick={() => setForm({})} color="secondary">Bağla</Button>
+                    <PDFTemplate data={watch()} disabled={false} setPdf={setPdf}/>
                     <Button disabled={loader} type="submit" color="primary">
                         {loader ? <Spinner color="light" size="sm"/> : 'Yadda saxla'}
                     </Button>

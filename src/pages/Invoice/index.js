@@ -7,11 +7,14 @@ import {Button, Card, CardBody, Col, Modal, ModalHeader, Row, Spinner, Uncontrol
 import Add from "./Add";
 import CustomPagination from "../../components/CustomPagination";
 import Can from "../../components/Common/Can";
+import moment from "moment";
+import ApproveModal from "./ApproveModal";
 
 const Invoices = () => {
     document.title = 'Faktura'
     const [confirmModal, setConfirmModal] = useState(false)
     const [form, setForm] = useState({})
+    const [approveForm, setApproveForm] = useState({})
     const [data, setData] = useState([])
     const [total, setTotal] = useState(0)
     const [page, setPage] = useState(1)
@@ -43,6 +46,12 @@ const Invoices = () => {
                     toggle={() => setForm({})}>{form?.data ? 'Düzəliş et' : 'Əlavə et'}</ModalHeader>
                 <Add fetchData={fetchData} form={form} setForm={setForm}/>
             </Modal>
+            <Modal className="modal-dialog-centered" isOpen={approveForm?.status}
+                   toggle={() => setApproveForm({})}>
+                <ModalHeader
+                    toggle={() => setApproveForm({})}>{'Təsdiqlə'}</ModalHeader>
+                <ApproveModal fetchData={fetchData} form={approveForm} setForm={setApproveForm}/>
+            </Modal>
             <div className="container-fluid">
                 <Breadcrumbs breadcrumbItem={`FAKTURA (${total})`}/>
                 <Row>
@@ -69,7 +78,15 @@ const Invoices = () => {
                                             <thead>
                                             <tr>
                                                 <th>№</th>
-                                                <th>Ad</th>
+                                                <th>Faktura No</th>
+                                                <th>Şirkət</th>
+                                                <th>Müştəri</th>
+                                                <th>Xidmət/Məhsul</th>
+                                                <th>Say</th>
+                                                <th>Qiymət</th>
+                                                <th>Cəm</th>
+                                                <th>Fayllar</th>
+                                                <th>Yaradılma tarixi</th>
                                                 <th>Qeyd</th>
                                                 <th/>
                                             </tr>
@@ -78,22 +95,52 @@ const Invoices = () => {
                                             {data.map((item, index) => (
                                                 <tr key={item.id}>
                                                     <td>{index + 1}</td>
-                                                    <td>{item.name}</td>
+                                                    <td>{item.code}</td>
+                                                    <td>{item.company_name}</td>
+                                                    <td>{item.customer_name}</td>
+                                                    <td>{item.product_name}</td>
+                                                    <td>{item.quantity}</td>
+                                                    <td>{item.price}</td>
+                                                    <td>{item.price * item.quantity}</td>
+                                                    <td>
+                                                        <a target="_blank"
+                                                           href={`${process.env.REACT_APP_FILE_URL}${item.pdf}`}>Faktura</a>
+                                                        <br/>
+                                                        {item.pdf2 &&
+                                                            <a target="_blank"
+                                                               href={`${process.env.REACT_APP_FILE_URL}${item.pdf2}`}>Təsdiqlənmiş
+                                                                {' '}Faktura</a>}
+                                                    </td>
+                                                    <td>{moment(item?.created_at).format('DD.MM.YYYY HH:mm')}</td>
                                                     <td>{item.note}</td>
                                                     <td>
                                                         <div className="d-flex align-items-center gap-1">
-                                                            <Can action="invoice_delete">
+                                                            {!item?.pdf2 && (
                                                                 <>
-                                                                    <Button color="danger"
-                                                                            id={`delete-${item.id}`}
-                                                                            onClick={() => setConfirmModal(item.id)}>
-                                                                        <i className="bx bx-trash"/>
+                                                                    <Button color="success"
+                                                                            id={`approve-${item.id}`}
+                                                                            onClick={() => setApproveForm({
+                                                                                status: true,
+                                                                                data: item
+                                                                            })}>
+                                                                        <i className="fa fa-check"/>
                                                                     </Button>
-                                                                    <UncontrolledTooltip target={`delete-${item.id}`}
+                                                                    <UncontrolledTooltip target={`approve-${item.id}`}
                                                                                          placement="bottom">
-                                                                        Sil
+                                                                        Təsdiqlə
                                                                     </UncontrolledTooltip>
                                                                 </>
+                                                            )}
+                                                            <Can action="invoice_delete">
+                                                                <Button color="danger"
+                                                                        id={`delete-${item.id}`}
+                                                                        onClick={() => setConfirmModal(item.id)}>
+                                                                    <i className="bx bx-trash"/>
+                                                                </Button>
+                                                                <UncontrolledTooltip target={`delete-${item.id}`}
+                                                                                     placement="bottom">
+                                                                    Sil
+                                                                </UncontrolledTooltip>
                                                             </Can>
                                                         </div>
                                                     </td>

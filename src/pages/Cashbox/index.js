@@ -24,7 +24,6 @@ import Missions from "../../api/missions";
 import Employees from "../../api/employees";
 import {Controller, useForm} from "react-hook-form";
 import Form from "../../helpers/form";
-import Patients from "../../api/patients";
 import FlatPicker from "react-flatpickr";
 import Select from "react-select";
 import PDFTemplate from "./PDFTemplate";
@@ -108,7 +107,8 @@ const Branches = () => {
             ...query ? query : {
                 doctor_id: doctorId?.value || null,
                 worker_id: senderDoctorId?.value || null,
-                service_id: missionId?.value || null
+                service_id: missionId?.value2 || null,
+                is_product: missionId?.is_product
             }
         })
         if (query) {
