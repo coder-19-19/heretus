@@ -157,7 +157,6 @@ const Examinations = () => {
                                                     {data?.examinations?.some(item => !item?.id) ? (
                                                         <Badge className="p-2 font-size-12"
                                                                color="info">{data?.examinations?.reduce((acc, val) => {
-                                                            console.log(val)
                                                             return acc + Number(val?.final_price)
                                                         }, 0)}</Badge>
                                                     ) : (

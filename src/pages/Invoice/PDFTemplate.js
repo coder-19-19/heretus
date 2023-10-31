@@ -7,7 +7,6 @@ import moment from "moment";
 
 const PDFTemplate = ({data, disabled, setPdf}) => {
 
-    console.log(data)
     ReactPdf.Font.register({
         family: "DejaVu Sans",
         fonts: [
@@ -159,76 +158,121 @@ const PDFTemplate = ({data, disabled, setPdf}) => {
                     </View>
                 </View>
                 <View style={[styles.divider, {marginTop: 32}]}/>
-                <View style={{flexDirection: 'column', gap: 10, marginTop: 32}}>
-                    <Text>
+                <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 16, fontSize: 14}}>
+                    <View style={{flexDirection: 'column', gap: 10, maxWidth: '50%'}}>
+                        <ReactPdf.Text style={{fontWeight: 'bold', fontSize: 20, color: '#7854f7'}}>
+                            Daxili şirkət
+                        </ReactPdf.Text>
+                        <Text>
+                            <ReactPdf.Text style={{fontWeight: 'bold'}}>
+                                Bank:{' '}
+                            </ReactPdf.Text>
+                            <ReactPdf.Text style={{fontStyle: 'italic'}}>
+                                {data?.company_id?.bank_name}
+                            </ReactPdf.Text>
+                        </Text>
+                        <Text>
+                            <ReactPdf.Text style={{fontWeight: 'bold'}}>
+                                S.W.I.F.T:{' '}
+                            </ReactPdf.Text>
+                            <ReactPdf.Text style={{fontStyle: 'italic'}}>
+                                {data?.company_id?.swift}
+                            </ReactPdf.Text>
+                        </Text>
+                        <Text>
+                            <ReactPdf.Text style={{fontWeight: 'bold'}}>
+                                Bankın VÖEN-i:{' '}
+                            </ReactPdf.Text>
+                            <ReactPdf.Text style={{fontStyle: 'italic'}}>
+                                {data?.company_id?.bank_voen}
+                            </ReactPdf.Text>
+                        </Text>
+                        <Text>
+                            <ReactPdf.Text style={{fontWeight: 'bold'}}>
+                                Bankın müxbir hesabı:{' '}
+                            </ReactPdf.Text>
+                            <ReactPdf.Text style={{fontStyle: 'italic'}}>
+                                {data?.company_id?.bank_account}
+                            </ReactPdf.Text>
+                        </Text>
+                        <Text>
+                            <ReactPdf.Text style={{fontWeight: 'bold'}}>
+                                Şəxsi hesab:{' '}
+                            </ReactPdf.Text>
+                            <ReactPdf.Text style={{fontStyle: 'italic'}}>
+                                {data?.company_id?.private_account}
+                            </ReactPdf.Text>
+                        </Text>
+                    </View>
+                    <View style={{flexDirection: 'column', gap: 10, maxWidth: '50%'}}>
                         <ReactPdf.Text style={{fontWeight: 'bold', fontSize: 20, color: '#7854f7'}}>
                             Müştəri
                         </ReactPdf.Text>
-                    </Text>
-                    <Text>
-                        <ReactPdf.Text style={{fontWeight: 'bold'}}>
-                            Sürücü:{' '}
-                        </ReactPdf.Text>
-                        <ReactPdf.Text style={{fontStyle: 'italic'}}>
-                            {data?.customer_id?.name}
-                        </ReactPdf.Text>
-                    </Text>
-                    <Text>
-                        <ReactPdf.Text style={{fontWeight: 'bold'}}>
-                            Maşın nömrəsi:{' '}
-                        </ReactPdf.Text>
-                        <ReactPdf.Text style={{fontStyle: 'italic'}}>
-                            {data?.customer_id?.car_number}
-                        </ReactPdf.Text>
-                    </Text>
-                    <Text>
-                        <ReactPdf.Text style={{fontWeight: 'bold'}}>
-                            Şirkət:{' '}
-                        </ReactPdf.Text>
-                        <ReactPdf.Text style={{fontStyle: 'italic'}}>
-                            {data?.customer_id?.company_name}
-                        </ReactPdf.Text>
-                    </Text>
-                    <Text>
-                        <ReactPdf.Text style={{fontWeight: 'bold'}}>
-                            Maşın nömrəsi:{' '}
-                        </ReactPdf.Text>
-                        <ReactPdf.Text style={{fontStyle: 'italic'}}>
-                            {data?.customer_id?.car_number}
-                        </ReactPdf.Text>
-                    </Text>
-                    <Text>
-                        <ReactPdf.Text style={{fontWeight: 'bold'}}>
-                            Şirkət nömrəsi:{' '}
-                        </ReactPdf.Text>
-                        <ReactPdf.Text style={{fontStyle: 'italic'}}>
-                            {data?.customer_id?.company_phone}
-                        </ReactPdf.Text>
-                    </Text>
-                    <Text>
-                        <ReactPdf.Text style={{fontWeight: 'bold'}}>
-                            Sürücü nömrəsi:{' '}
-                        </ReactPdf.Text>
-                        <ReactPdf.Text style={{fontStyle: 'italic'}}>
-                            {data?.customer_id?.customer_phone}
-                        </ReactPdf.Text>
-                    </Text>
-                    <Text>
-                        <ReactPdf.Text style={{fontWeight: 'bold'}}>
-                            Email:{' '}
-                        </ReactPdf.Text>
-                        <ReactPdf.Text style={{fontStyle: 'italic'}}>
-                            {data?.company_id?.email}
-                        </ReactPdf.Text>
-                    </Text>
-                    <Text>
-                        <ReactPdf.Text style={{fontWeight: 'bold'}}>
-                            VÖEN:{' '}
-                        </ReactPdf.Text>
-                        <ReactPdf.Text style={{fontStyle: 'italic'}}>
-                            {data?.company_id?.voen}
-                        </ReactPdf.Text>
-                    </Text>
+                        <Text>
+                            <ReactPdf.Text style={{fontWeight: 'bold'}}>
+                                Sürücü:{' '}
+                            </ReactPdf.Text>
+                            <ReactPdf.Text style={{fontStyle: 'italic'}}>
+                                {data?.customer_id?.name}
+                            </ReactPdf.Text>
+                        </Text>
+                        <Text>
+                            <ReactPdf.Text style={{fontWeight: 'bold'}}>
+                                Maşın nömrəsi:{' '}
+                            </ReactPdf.Text>
+                            <ReactPdf.Text style={{fontStyle: 'italic'}}>
+                                {data?.customer_id?.car_number}
+                            </ReactPdf.Text>
+                        </Text>
+                        <Text>
+                            <ReactPdf.Text style={{fontWeight: 'bold'}}>
+                                Şirkət:{' '}
+                            </ReactPdf.Text>
+                            <ReactPdf.Text style={{fontStyle: 'italic'}}>
+                                {data?.customer_id?.company_name}
+                            </ReactPdf.Text>
+                        </Text>
+                        <Text>
+                            <ReactPdf.Text style={{fontWeight: 'bold'}}>
+                                Maşın nömrəsi:{' '}
+                            </ReactPdf.Text>
+                            <ReactPdf.Text style={{fontStyle: 'italic'}}>
+                                {data?.customer_id?.car_number}
+                            </ReactPdf.Text>
+                        </Text>
+                        <Text>
+                            <ReactPdf.Text style={{fontWeight: 'bold'}}>
+                                Şirkət nömrəsi:{' '}
+                            </ReactPdf.Text>
+                            <ReactPdf.Text style={{fontStyle: 'italic'}}>
+                                {data?.customer_id?.company_phone}
+                            </ReactPdf.Text>
+                        </Text>
+                        <Text>
+                            <ReactPdf.Text style={{fontWeight: 'bold'}}>
+                                Sürücü nömrəsi:{' '}
+                            </ReactPdf.Text>
+                            <ReactPdf.Text style={{fontStyle: 'italic'}}>
+                                {data?.customer_id?.customer_phone}
+                            </ReactPdf.Text>
+                        </Text>
+                        <Text>
+                            <ReactPdf.Text style={{fontWeight: 'bold'}}>
+                                Email:{' '}
+                            </ReactPdf.Text>
+                            <ReactPdf.Text style={{fontStyle: 'italic'}}>
+                                {data?.company_id?.email}
+                            </ReactPdf.Text>
+                        </Text>
+                        <Text>
+                            <ReactPdf.Text style={{fontWeight: 'bold'}}>
+                                VÖEN:{' '}
+                            </ReactPdf.Text>
+                            <ReactPdf.Text style={{fontStyle: 'italic'}}>
+                                {data?.company_id?.voen}
+                            </ReactPdf.Text>
+                        </Text>
+                    </View>
                 </View>
                 <ReactPdf.View style={[styles.table, {marginTop: 32}]}>
                     <ReactPdf.View style={styles.tableHeaderRow}>

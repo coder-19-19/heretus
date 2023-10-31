@@ -3,12 +3,30 @@ import Breadcrumbs from "components/Common/Breadcrumb";
 import {useEffect, useState} from "react";
 import Api from 'api/invoice'
 
-import {Button, Card, CardBody, Col, Modal, ModalHeader, Row, Spinner, UncontrolledTooltip} from "reactstrap";
+import {
+    Badge,
+    Button,
+    Card,
+    CardBody,
+    Col,
+    Label,
+    Modal,
+    ModalHeader,
+    Row,
+    Spinner,
+    UncontrolledTooltip
+} from "reactstrap";
 import Add from "./Add";
 import CustomPagination from "../../components/CustomPagination";
 import Can from "../../components/Common/Can";
 import moment from "moment";
 import ApproveModal from "./ApproveModal";
+import {Controller, useForm} from "react-hook-form";
+import Select from "react-select";
+import Company from "../../api/company";
+import Form from "../../helpers/form";
+import Customers from "../../api/customers";
+import FlatPicker from "react-flatpickr";
 
 const Invoices = () => {
     document.title = 'Faktura'
@@ -18,20 +36,45 @@ const Invoices = () => {
     const [data, setData] = useState([])
     const [total, setTotal] = useState(0)
     const [page, setPage] = useState(1)
+    const [companies, setCompanies] = useState([])
+    const [customers, setCustomers] = useState([])
     const [isFetching, setIsFetching] = useState(true)
+    const {control, errors, reset, getValues, handleSubmit} = useForm()
 
     const deleteData = async () => {
         await Api.delete(confirmModal)
         fetchData()
     }
 
-    const fetchData = async (showLoader = true) => {
+    const fetchData = async (showLoader = true, p = null) => {
         setIsFetching(showLoader)
-        const data = await Api.get({page})
+        const data = await Api.get({
+            page: p || page,
+            ...Form.validateBody(getValues()),
+            date: Form.convertFormDate(getValues()?.date)
+        })
         setData(data?.data?.invoices)
         setTotal(data?.meta?.total)
         setIsFetching(false)
     }
+
+    const fetchCompanies = async () => {
+        const {data} = await Company.getSelect()
+        setCompanies(data)
+    }
+    const fetchCustomers = async () => {
+        const {data} = await Customers.getSelect()
+        setCustomers(data)
+    }
+
+    const filter = async () => {
+        fetchData(true, 1)
+    }
+
+    useEffect(() => {
+        fetchCompanies()
+        fetchCustomers()
+    }, [])
 
     useEffect(() => {
         fetchData()
@@ -55,6 +98,90 @@ const Invoices = () => {
             <div className="container-fluid">
                 <Breadcrumbs breadcrumbItem={`FAKTURA (${total})`}/>
                 <Row>
+                    <Col sm={12}>
+                        <Card>
+                            <CardBody>
+                                <form onSubmit={handleSubmit(filter)}>
+                                    <Row>
+                                        <Col sm={12} md={4}>
+                                            <div className="mb-3">
+                                                <Label for="company_id">Şirkət</Label>
+                                                <Controller name="company_id"
+                                                            control={control}
+                                                            render={({field: {value, onChange}}) => (
+                                                                <Select
+                                                                    isClearable={true}
+                                                                    options={companies}
+                                                                    placeholder=""
+                                                                    className={`w-100 ${errors?.company_id && 'is-invalid'}`}
+                                                                    onChange={onChange}
+                                                                    value={value}
+                                                                    name="company_id"
+                                                                    id="company_id"/>
+                                                            )}/>
+                                            </div>
+                                        </Col>
+                                        <Col sm={12} md={4}>
+                                            <div className="mb-3">
+                                                <Label for="customer_id">Müştəri</Label>
+                                                <Controller name="customer_id"
+                                                            control={control}
+                                                            render={({field: {value, onChange}}) => (
+                                                                <Select
+                                                                    isClearable={true}
+                                                                    options={customers}
+                                                                    placeholder=""
+                                                                    className={`w-100 ${errors?.customer_id && 'is-invalid'}`}
+                                                                    onChange={onChange}
+                                                                    value={value}
+                                                                    name="customer_id"
+                                                                    id="customer_id"/>
+                                                            )}/>
+                                            </div>
+                                        </Col>
+                                        <Col sm={12} md={4}>
+                                            <div className="mb-3">
+                                                <Label for="date">Tarix</Label>
+                                                <Controller name="date"
+                                                            control={control}
+                                                            render={({field: {value, onChange}}) => (
+                                                                <FlatPicker
+                                                                    className="form-control d-block"
+                                                                    value={value}
+                                                                    onChange={onChange}
+                                                                    options={{
+                                                                        locale: 'az'
+                                                                    }}
+                                                                />
+                                                            )}/>
+                                            </div>
+                                        </Col>
+                                        <Col sm={12}>
+                                            <div className="d-flex gap-2 justify-content-end">
+                                                <Button id="reset-btn" color="primary" outline onClick={() => {
+                                                    reset({
+                                                        department_id: null,
+                                                        price: '',
+                                                        name: ''
+                                                    })
+                                                    setPage(1)
+                                                    fetchData(1)
+                                                }}>
+                                                    <i className="bx bx-rotate-right"/>
+                                                </Button>
+                                                <UncontrolledTooltip placement="bottom" target="reset-btn">
+                                                    Sıfırla
+                                                </UncontrolledTooltip>
+                                                <Button type="submit" color="primary">
+                                                    Axtar
+                                                </Button>
+                                            </div>
+                                        </Col>
+                                    </Row>
+                                </form>
+                            </CardBody>
+                        </Card>
+                    </Col>
                     <Col sm={12}>
                         <Card>
                             {isFetching ? (
@@ -146,6 +273,39 @@ const Invoices = () => {
                                                     </td>
                                                 </tr>
                                             ))}
+                                            <tr>
+                                                <td/>
+                                                <td/>
+                                                <td/>
+                                                <td/>
+                                                <td/>
+                                                <td>
+                                                    <Badge color="warning">
+                                                        {data?.reduce((acc, val) => {
+                                                            return acc + val?.quantity
+                                                        }, 0)}{' '}
+                                                    </Badge>
+                                                </td>
+                                                <td>
+                                                    <Badge color="primary">
+                                                        {data?.reduce((acc, val) => {
+                                                            return acc + val?.price
+                                                        }, 0)}{' '}
+                                                    </Badge>
+                                                </td>
+                                                <td>
+                                                    <Badge color="success">
+                                                        {data?.reduce((acc, val) => {
+                                                            return acc + (val?.price * val?.quantity)
+                                                        }, 0)}{' '}
+                                                    </Badge>
+                                                </td>
+                                                <td/>
+                                                <td/>
+                                                <td/>
+                                                <td/>
+                                                <td/>
+                                            </tr>
                                             </tbody>
                                         </table>
                                     </div>

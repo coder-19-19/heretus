@@ -18,7 +18,6 @@ const Register = () => {
             await Auth.register(values)
             navigate('/login')
         } catch (e) {
-            console.log(e.response.data)
             FormHelper.setApiErrors(e.response.data, setError)
         } finally {
             setLoader(false)

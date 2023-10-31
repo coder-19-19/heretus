@@ -93,6 +93,7 @@ const Add = ({fetchData, form, setData, data}) => {
                 is_product: values?.service_id?.is_product,
                 service: values?.service_id?.label,
                 ...FormHelper.validateBody(values),
+                discount: values?.discount || 0,
                 service_id: values?.service_id?.value2,
                 patient_id: values?.patient_id?.value || values?.patient_id?.value,
                 admission_date: FormHelper.convertForBackend(values?.admission_date),
@@ -241,7 +242,6 @@ const Add = ({fetchData, form, setData, data}) => {
                                             <Input
                                                 type="number"
                                                 name="quantity"
-                                                disabled={watch('service_id')?.is_product != 1}
                                                 id="quantity"
                                                 value={value}
                                                 onChange={onChange}

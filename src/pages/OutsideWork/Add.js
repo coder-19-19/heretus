@@ -49,24 +49,6 @@ const Add = ({fetchData, form, setForm}) => {
                     {FormHelper.generateFormFeedback(errors, 'file')}
                 </div>
                 <div className="mb-3">
-                    <Label for="expense">Məxaric</Label>
-                    <Controller rules={{required: true}} name="expense" control={control}
-                                render={({field: {value, onChange}}) => (
-                                    <Input
-                                        type="number"
-                                        name="expense"
-                                        id="expense"
-                                        value={value}
-                                        onChange={e => {
-                                            onChange(e)
-                                            setValue('benefit', watch('income') - e.target.value)
-                                        }}
-                                        className={errors?.expense && 'is-invalid'}
-                                    />
-                                )}/>
-                    {FormHelper.generateFormFeedback(errors, 'expense')}
-                </div>
-                <div className="mb-3">
                     <Label for="income">Mədaxil</Label>
                     <Controller rules={{required: true}} name="income" control={control}
                                 render={({field: {value, onChange}}) => (
@@ -83,6 +65,24 @@ const Add = ({fetchData, form, setForm}) => {
                                     />
                                 )}/>
                     {FormHelper.generateFormFeedback(errors, 'income')}
+                </div>
+                <div className="mb-3">
+                    <Label for="expense">Məxaric</Label>
+                    <Controller rules={{required: true}} name="expense" control={control}
+                                render={({field: {value, onChange}}) => (
+                                    <Input
+                                        type="number"
+                                        name="expense"
+                                        id="expense"
+                                        value={value}
+                                        onChange={e => {
+                                            onChange(e)
+                                            setValue('benefit', watch('income') - e.target.value)
+                                        }}
+                                        className={errors?.expense && 'is-invalid'}
+                                    />
+                                )}/>
+                    {FormHelper.generateFormFeedback(errors, 'expense')}
                 </div>
                 <div className="mb-3">
                     <Label for="benefit">Mənfəət</Label>
