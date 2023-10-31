@@ -160,12 +160,12 @@ const Invoices = () => {
                                             <div className="d-flex gap-2 justify-content-end">
                                                 <Button id="reset-btn" color="primary" outline onClick={() => {
                                                     reset({
-                                                        department_id: null,
-                                                        price: '',
-                                                        name: ''
+                                                        company_id: null,
+                                                        customer_id: null,
+                                                        date: null
                                                     })
                                                     setPage(1)
-                                                    fetchData(1)
+                                                    fetchData(true, 1)
                                                 }}>
                                                     <i className="bx bx-rotate-right"/>
                                                 </Button>
@@ -280,21 +280,21 @@ const Invoices = () => {
                                                 <td/>
                                                 <td/>
                                                 <td>
-                                                    <Badge color="warning">
+                                                    <Badge className="p-2 font-size-12" color="warning">
                                                         {data?.reduce((acc, val) => {
                                                             return acc + val?.quantity
                                                         }, 0)}{' '}
                                                     </Badge>
                                                 </td>
                                                 <td>
-                                                    <Badge color="primary">
+                                                    <Badge className="p-2 font-size-12" color="primary">
                                                         {data?.reduce((acc, val) => {
                                                             return acc + val?.price
                                                         }, 0)}{' '}
                                                     </Badge>
                                                 </td>
                                                 <td>
-                                                    <Badge color="success">
+                                                    <Badge className="p-2 font-size-12" color="success">
                                                         {data?.reduce((acc, val) => {
                                                             return acc + (val?.price * val?.quantity)
                                                         }, 0)}{' '}

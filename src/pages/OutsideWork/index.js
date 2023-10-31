@@ -96,12 +96,10 @@ const OutsideWork = () => {
                                             <div className="d-flex gap-2 justify-content-end">
                                                 <Button id="reset-btn" color="primary" outline onClick={() => {
                                                     reset({
-                                                        department_id: null,
-                                                        price: '',
-                                                        name: ''
+                                                        date: null
                                                     })
                                                     setPage(1)
-                                                    fetchData(1)
+                                                    fetchData(true, 1)
                                                 }}>
                                                     <i className="bx bx-rotate-right"/>
                                                 </Button>
@@ -185,21 +183,21 @@ const OutsideWork = () => {
                                                 <td/>
                                                 <td/>
                                                 <td>
-                                                    <Badge color="primary">
+                                                    <Badge className="p-2 font-size-12" color="primary">
                                                         {data?.reduce((acc, val) => {
                                                             return acc + val?.income
                                                         }, 0)}{' '}
                                                     </Badge>
                                                 </td>
                                                 <td>
-                                                    <Badge color="danger">
+                                                    <Badge className="p-2 font-size-12" color="danger">
                                                         {data?.reduce((acc, val) => {
                                                             return acc + val?.expense
                                                         }, 0)}{' '}
                                                     </Badge>
                                                 </td>
                                                 <td>
-                                                    <Badge color="success">
+                                                    <Badge className="p-2 font-size-12" color="success">
                                                         {data?.reduce((acc, val) => {
                                                             return acc + val?.benefit
                                                         }, 0)}{' '}
