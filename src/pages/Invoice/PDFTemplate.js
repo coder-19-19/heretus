@@ -296,7 +296,7 @@ const PDFTemplate = ({data, disabled, setPdf}) => {
         </ReactPdf.Document>}>
             {({url, blob}) => {
                 setPdf(blob)
-                return <Can action="examinationPayment_pdf">
+                return <Can action="invoice_pdf">
                     <a className={`btn btn-primary ${disabled && 'disabled'}`}
                        href={url}
                        target="_blank">
