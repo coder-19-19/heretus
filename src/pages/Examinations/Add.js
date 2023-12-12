@@ -95,6 +95,7 @@ const Add = ({fetchData, form, setData, data}) => {
                 ...FormHelper.validateBody(values),
                 discount: values?.discount || 0,
                 service_id: values?.service_id?.value2,
+                code: values?.service_id?.code,
                 patient_id: values?.patient_id?.value || values?.patient_id?.value,
                 admission_date: FormHelper.convertForBackend(values?.admission_date),
                 expiration_date: FormHelper.convertForBackend(values?.expiration_date),
@@ -254,6 +255,42 @@ const Add = ({fetchData, form, setData, data}) => {
                     </Col>
                     <Col sm={12} md={4}>
                         <div className="mb-3">
+                            <Label for="price_first">Köhnə qiymət</Label>
+                            <Controller rules={{required: true}} name="price_first" control={control}
+                                        render={({field: {value, onChange}}) => (
+                                            <Input
+                                                type="number"
+                                                name="price_first"
+                                                id="price_first"
+                                                value={value}
+                                                onChange={e => {
+                                                    onChange(e)
+                                                    setValue('price',Number(((e.target.value * Number(watch('percent') || 0)) / 100)) + Number(e.target.value || 0))
+                                                }}
+                                                className={errors?.price_first && 'is-invalid'}
+                                            />
+                                        )}/>
+                            {FormHelper.generateFormFeedback(errors, 'percent')}
+                        </div>
+                        <div className="mb-3">
+                            <Label for="percent">Faiz</Label>
+                            <Controller rules={{required: true}} name="percent" control={control}
+                                        render={({field: {value, onChange}}) => (
+                                            <Input
+                                                type="number"
+                                                name="percent"
+                                                id="percent"
+                                                value={value}
+                                                onChange={e => {
+                                                    onChange(e)
+                                                    setValue('price',Number(((e.target.value * Number(watch('price_first') || 0)) / 100)) + Number(watch('price_first') || 0))
+                                                }}
+                                                className={errors?.percent && 'is-invalid'}
+                                            />
+                                        )}/>
+                            {FormHelper.generateFormFeedback(errors, 'percent')}
+                        </div>
+                        <div className="mb-3">
                             <Label for="price">Qiymət</Label>
                             <Controller rules={{required: true}} name="price" control={control}
                                         render={({field: {value, onChange}}) => (
@@ -261,8 +298,7 @@ const Add = ({fetchData, form, setData, data}) => {
                                                 type="number"
                                                 name="price"
                                                 id="price"
-                                                disabled
-                                                value={(value - (value * watch('discount') / 100)) * watch('quantity')}
+                                                value={value}
                                                 onChange={onChange}
                                                 className={errors?.price && 'is-invalid'}
                                             />

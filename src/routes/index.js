@@ -158,14 +158,6 @@ const authProtectedRoutes = [
         can: 'purchase_view'
     },
     {
-        path: "sale",
-        component: <Sale/>,
-        title: 'Məxaric',
-        menu: 'warehouse',
-        icon: 'basket-shopping',
-        can: 'sale_view'
-    },
-    {
         path: "examinations2",
         component: <Examinations2/>,
         title: 'Ximdət/Məhsul',

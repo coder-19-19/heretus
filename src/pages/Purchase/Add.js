@@ -8,7 +8,7 @@ import Suppliers from "../../api/suppliers";
 import Products from "../../api/products";
 import Select from "react-select";
 
-const Add = ({fetchData, form, setForm}) => {
+const Add = ({fetchData, form, setForm,types}) => {
     const {control, handleSubmit, setValue, setError, formState: {errors}} = useForm()
     const [loader, setLoader] = useState(false)
     const [workers, setWorkers] = useState([])
@@ -30,7 +30,8 @@ const Add = ({fetchData, form, setForm}) => {
                 products: values?.products?.every(item => item.product_id && item.quantity) ? values?.products?.map(item => {
                     return {
                         ...item,
-                        product_id: item?.product_id?.value || item?.product_id
+                        product_id: item?.product_id?.value || item?.product_id,
+                        is_legal: item?.is_legal?.value || item?.is_legal,
                     }
                 }) : []
             })
@@ -144,7 +145,7 @@ const Add = ({fetchData, form, setForm}) => {
                                     id="product_id"/>
                                 <Button onClick={() => {
                                     productsArr.append(addData)
-                                    setAddData({quantity: '', price: '', product_id: null, edv: ''})
+                                    setAddData({quantity: '', price: '', product_id: null, edv: '',percent:'',price_first:'',is_legal:null,code:'',brand:''})
                                 }} disabled={!addData?.product_id || !addData?.quantity || !addData?.price}
                                         color="primary">
                                     <i className="bx bx-plus"/>
@@ -163,23 +164,34 @@ const Add = ({fetchData, form, setForm}) => {
                                 type="number"
                                 id="quantity"/>
                         </div>
-                        {/*<div className="mb-3">*/}
-                        {/*    <Label for="edv">ƏDV(%)</Label>*/}
-                        {/*    <Input*/}
-                        {/*        type="number"*/}
-                        {/*        rows={5}*/}
-                        {/*        name="edv"*/}
-                        {/*        id="edv"*/}
-                        {/*        onChange={e => setAddData(prev => ({*/}
-                        {/*            ...prev,*/}
-                        {/*            edv: e.target.value*/}
-                        {/*        }))}*/}
-                        {/*        value={addData?.edv}*/}
-                        {/*        className={errors?.edv && 'is-invalid'}*/}
-                        {/*    />*/}
-                        {/*</div>*/}
                         <div className="mb-3">
-                            <Label for="price">Qiyməti</Label>
+                            <Label for="price_first">Köhnə qiymət</Label>
+                            <Input
+                                onChange={e => setAddData(prev => ({
+                                    ...prev,
+                                    price_first: e.target.value,
+                                    price:Number(((e.target.value * Number(addData?.percent || 0)) / 100)) + Number(e.target.value)
+                                }))}
+                                value={addData?.price_first}
+                                name="price_first"
+                                type="number"
+                                id="price_first"/>
+                        </div>
+                        <div className="mb-3">
+                            <Label for="percent">Faiz</Label>
+                            <Input
+                                onChange={e => setAddData(prev => ({
+                                    ...prev,
+                                    percent: e.target.value,
+                                    price:Number(((e.target.value * Number(addData?.price_first || 0)) / 100)) + Number(addData?.price_first || 0)
+                                }))}
+                                value={addData?.percent}
+                                name="percent"
+                                type="number"
+                                id="percent"/>
+                        </div>
+                        <div className="mb-3">
+                            <Label for="price">Yekun qiyməti</Label>
                             <Input
                                 onChange={e => setAddData(prev => ({
                                     ...prev,
@@ -190,6 +202,46 @@ const Add = ({fetchData, form, setForm}) => {
                                 type="number"
                                 id="price"/>
                         </div>
+                        <div className="mb-3">
+                            <Label for="code">Məhsul kodu</Label>
+                            <Input
+                                onChange={e => setAddData(prev => ({
+                                    ...prev,
+                                    code: e.target.value
+                                }))}
+                                value={addData?.code}
+                                name="code"
+                                type="text"
+                                id="code"/>
+                        </div>
+                        <div className="mb-3">
+                            <Label for="brand">Marka</Label>
+                            <Input
+                                onChange={e => setAddData(prev => ({
+                                    ...prev,
+                                    brand: e.target.value
+                                }))}
+                                value={addData?.brand}
+                                name="brand"
+                                type="text"
+                                id="brand"/>
+                        </div>
+                        <div className="mb-3">
+                            <Label for="is_legal">Rəsmi/Q.Rəsmi</Label>
+                            <div className="d-flex gap-2">
+                                <Select
+                                    options={types}
+                                    placeholder=""
+                                    className={`w-100`}
+                                    onChange={e => setAddData(prev => ({
+                                        ...prev,
+                                        is_legal: e
+                                    }))}
+                                    value={addData?.is_legal}
+                                    name="is_legal"
+                                    id="is_legal"/>
+                            </div>
+                        </div>
                         {productsArr.fields?.length > 0 && (
                             <div style={{maxHeight: '400px', overflow: 'auto'}}>
                                 <div className="table-responsive w-100">
@@ -199,7 +251,12 @@ const Add = ({fetchData, form, setForm}) => {
                                             <th>Məhsul</th>
                                             <th>Sayı</th>
                                             {/*<th>ƏDV(%)</th>*/}
-                                            <th>Qiyməti</th>
+                                            <th>Köhnə qiyməti</th>
+                                            <th>Faiz</th>
+                                            <th>Yekun qiyməti</th>
+                                            <th>Kod</th>
+                                            <th>Marka</th>
+                                            <th>Rəsmi/Q.Rəsmi</th>
                                             <th>Məbləğ</th>
                                             <th/>
                                         </tr>
@@ -210,7 +267,12 @@ const Add = ({fetchData, form, setForm}) => {
                                                 <td>{item?.product_id?.label || item?.product_name}</td>
                                                 <td>{item?.quantity}</td>
                                                 {/*<td>{item?.edv}</td>*/}
+                                                <td>{item?.first_price}</td>
+                                                <td>{item?.percent}</td>
                                                 <td>{item?.price}</td>
+                                                <td>{item?.code}</td>
+                                                <td>{item?.brand}</td>
+                                                <td>{item?.is_legal?.label || types?.find(x => x?.value == item?.is_legal)?.label}</td>
                                                 <td>{(Number(item?.price) + Number(item?.edv || 0)) * Number(item?.quantity)}</td>
                                                 <td>
                                                     <Button size="sm" onClick={() => {
@@ -221,6 +283,11 @@ const Add = ({fetchData, form, setForm}) => {
                                             </tr>
                                         ))}
                                         <tr>
+                                            <td/>
+                                            <td/>
+                                            <td/>
+                                            <td/>
+                                            <td/>
                                             <td/>
                                             <td/>
                                             <td><b>Yekun məbləğ</b></td>

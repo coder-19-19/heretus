@@ -23,6 +23,17 @@ const Branches = () => {
         fetchData()
     }
 
+    const types = [
+        {
+            value:1,
+            label:'Rəsmi',
+        },
+        {
+            value: 2,
+            label: 'Q.Rəsmi'
+        }
+    ]
+
     const fetchData = async (showLoader = true) => {
         setIsFetching(showLoader)
         const data = await Api.get({page})
@@ -42,7 +53,7 @@ const Branches = () => {
                    toggle={() => setForm({})}>
                 <ModalHeader
                     toggle={() => setForm({})}>{form?.data ? 'Düzəliş et' : 'Əlavə et'}</ModalHeader>
-                <Add fetchData={fetchData} form={form} setForm={setForm}/>
+                <Add types={types} fetchData={fetchData} form={form} setForm={setForm}/>
             </Modal>
             <div className="container-fluid">
                 <Breadcrumbs breadcrumbItem={`MƏDAXİL (${total})`}/>
