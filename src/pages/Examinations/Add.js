@@ -220,6 +220,7 @@ const Add = ({fetchData, form, setData, data}) => {
                                                     className={`w-100 ${errors?.service_id && 'is-invalid'}`}
                                                     onChange={e => {
                                                         onChange(e)
+                                                        setValue('price_first', e?.price)
                                                         setValue('price', missions?.find(item => item?.value == e?.value)?.price)
                                                         if (e?.is_product != 1) {
                                                             setValue('quantity', 1)
@@ -255,7 +256,7 @@ const Add = ({fetchData, form, setData, data}) => {
                     </Col>
                     <Col sm={12} md={4}>
                         <div className="mb-3">
-                            <Label for="price_first">Köhnə qiymət</Label>
+                            <Label for="price_first">Qiymət</Label>
                             <Controller rules={{required: true}} name="price_first" control={control}
                                         render={({field: {value, onChange}}) => (
                                             <Input
@@ -265,7 +266,7 @@ const Add = ({fetchData, form, setData, data}) => {
                                                 value={value}
                                                 onChange={e => {
                                                     onChange(e)
-                                                    setValue('price',Number(((e.target.value * Number(watch('percent') || 0)) / 100)) + Number(e.target.value || 0))
+                                                    setValue('price', Number(((e.target.value * Number(watch('percent') || 0)) / 100)) + Number(e.target.value || 0))
                                                 }}
                                                 className={errors?.price_first && 'is-invalid'}
                                             />
@@ -283,7 +284,7 @@ const Add = ({fetchData, form, setData, data}) => {
                                                 value={value}
                                                 onChange={e => {
                                                     onChange(e)
-                                                    setValue('price',Number(((e.target.value * Number(watch('price_first') || 0)) / 100)) + Number(watch('price_first') || 0))
+                                                    setValue('price', Number(((e.target.value * Number(watch('price_first') || 0)) / 100)) + Number(watch('price_first') || 0))
                                                 }}
                                                 className={errors?.percent && 'is-invalid'}
                                             />
@@ -291,7 +292,7 @@ const Add = ({fetchData, form, setData, data}) => {
                             {FormHelper.generateFormFeedback(errors, 'percent')}
                         </div>
                         <div className="mb-3">
-                            <Label for="price">Qiymət</Label>
+                            <Label for="price">Yekun qiymət</Label>
                             <Controller rules={{required: true}} name="price" control={control}
                                         render={({field: {value, onChange}}) => (
                                             <Input
