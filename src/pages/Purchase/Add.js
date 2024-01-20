@@ -8,7 +8,7 @@ import Suppliers from "../../api/suppliers";
 import Products from "../../api/products";
 import Select from "react-select";
 
-const Add = ({fetchData, form, setForm,types}) => {
+const Add = ({fetchData, form, setForm, types}) => {
     const {control, handleSubmit, setValue, setError, formState: {errors}} = useForm()
     const [loader, setLoader] = useState(false)
     const [workers, setWorkers] = useState([])
@@ -145,7 +145,17 @@ const Add = ({fetchData, form, setForm,types}) => {
                                     id="product_id"/>
                                 <Button onClick={() => {
                                     productsArr.append(addData)
-                                    setAddData({quantity: '', price: '', product_id: null, edv: '',percent:'',price_first:'',is_legal:null,code:'',brand:''})
+                                    setAddData({
+                                        quantity: '',
+                                        price: '',
+                                        product_id: null,
+                                        edv: '',
+                                        percent: '',
+                                        price_first: '',
+                                        is_legal: null,
+                                        code: '',
+                                        brand: ''
+                                    })
                                 }} disabled={!addData?.product_id || !addData?.quantity || !addData?.price}
                                         color="primary">
                                     <i className="bx bx-plus"/>
@@ -170,7 +180,7 @@ const Add = ({fetchData, form, setForm,types}) => {
                                 onChange={e => setAddData(prev => ({
                                     ...prev,
                                     price_first: e.target.value,
-                                    price:Number(((e.target.value * Number(addData?.percent || 0)) / 100)) + Number(e.target.value)
+                                    price: Number(((e.target.value * Number(addData?.percent || 0)) / 100)) + Number(e.target.value)
                                 }))}
                                 value={addData?.price_first}
                                 name="price_first"
@@ -183,7 +193,7 @@ const Add = ({fetchData, form, setForm,types}) => {
                                 onChange={e => setAddData(prev => ({
                                     ...prev,
                                     percent: e.target.value,
-                                    price:Number(((e.target.value * Number(addData?.price_first || 0)) / 100)) + Number(addData?.price_first || 0)
+                                    price: Number(((e.target.value * Number(addData?.price_first || 0)) / 100)) + Number(addData?.price_first || 0)
                                 }))}
                                 value={addData?.percent}
                                 name="percent"
@@ -267,7 +277,7 @@ const Add = ({fetchData, form, setForm,types}) => {
                                                 <td>{item?.product_id?.label || item?.product_name}</td>
                                                 <td>{item?.quantity}</td>
                                                 {/*<td>{item?.edv}</td>*/}
-                                                <td>{item?.first_price}</td>
+                                                <td>{item?.price_first}</td>
                                                 <td>{item?.percent}</td>
                                                 <td>{item?.price}</td>
                                                 <td>{item?.code}</td>

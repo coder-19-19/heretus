@@ -79,7 +79,8 @@ const Examinations = () => {
                             ) : (
                                 <CardBody className="mt-3" style={{overflow: 'auto', maxHeight: '470px'}}>
                                     {data?.examinations?.some(item => !item?.id) && (
-                                        <Button type="button" onClick={addBulk} disabled={addButtonIsDisabled}
+                                        <Button id="examination-save" type="button" onClick={addBulk}
+                                                disabled={addButtonIsDisabled}
                                                 color="primary" className="mb-2">
                                             {addButtonIsDisabled ? <Spinner size="sm" color="light"/> : 'Yadda saxla'}
                                         </Button>
