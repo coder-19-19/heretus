@@ -37,7 +37,6 @@ const Add = ({fetchData, form, setForm}) => {
                                 render={({field: {value, onChange}}) => (
                                     <Input
                                         type="file"
-                                        accept=".pdf"
                                         name="file"
                                         id="file"
                                         onChange={e => {

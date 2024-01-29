@@ -7,6 +7,8 @@ import Employees from "../../api/employees";
 import Suppliers from "../../api/suppliers";
 import Products from "../../api/products";
 import Select from "react-select";
+import FlatPicker from "react-flatpickr";
+import moment from "moment";
 
 const Add = ({fetchData, form, setForm, types}) => {
     const {control, handleSubmit, setValue, setError, formState: {errors}} = useForm()
@@ -32,6 +34,8 @@ const Add = ({fetchData, form, setForm, types}) => {
                         ...item,
                         product_id: item?.product_id?.value || item?.product_id,
                         is_legal: item?.is_legal?.value || item?.is_legal,
+                        date: moment(values?.date).format('YYYY-MM-DD'),
+
                     }
                 }) : []
             })
@@ -154,13 +158,28 @@ const Add = ({fetchData, form, setForm, types}) => {
                                         price_first: '',
                                         is_legal: null,
                                         code: '',
-                                        brand: ''
+                                        brand: '',
+                                        date: new Date()
                                     })
                                 }} disabled={!addData?.product_id || !addData?.quantity || !addData?.price}
                                         color="primary">
                                     <i className="bx bx-plus"/>
                                 </Button>
                             </div>
+                        </div>
+                        <div className="mb-3">
+                            <Label for="date">Tarix</Label>
+                            <FlatPicker
+                                className="form-control d-block"
+                                value={addData?.date}
+                                onChange={e => setAddData(prev => ({
+                                    ...prev,
+                                    date: FormHelper.convertFormDate(e)
+                                }))}
+                                options={{
+                                    locale: 'az'
+                                }}
+                            />
                         </div>
                         <div className="mb-3">
                             <Label for="quantity">Sayı</Label>
@@ -259,6 +278,7 @@ const Add = ({fetchData, form, setForm, types}) => {
                                         <thead>
                                         <tr>
                                             <th>Məhsul</th>
+                                            <th>Tarix</th>
                                             <th>Sayı</th>
                                             {/*<th>ƏDV(%)</th>*/}
                                             <th>Köhnə qiyməti</th>
@@ -275,6 +295,7 @@ const Add = ({fetchData, form, setForm, types}) => {
                                         {productsArr.fields.map((item, index) => (
                                             <tr key={item.id}>
                                                 <td>{item?.product_id?.label || item?.product_name}</td>
+                                                <td>{item?.date && moment(item?.date).format('DD.MM.YYYY')}</td>
                                                 <td>{item?.quantity}</td>
                                                 {/*<td>{item?.edv}</td>*/}
                                                 <td>{item?.price_first}</td>
@@ -297,9 +318,6 @@ const Add = ({fetchData, form, setForm, types}) => {
                                             <td/>
                                             <td/>
                                             <td/>
-                                            <td/>
-                                            <td/>
-                                            <td/>
                                             <td><b>Yekun məbləğ</b></td>
                                             <td>
                                                 <Badge color="danger">
@@ -308,6 +326,9 @@ const Add = ({fetchData, form, setForm, types}) => {
                                                     }, 0)}
                                                 </Badge>
                                             </td>
+                                            <td/>
+                                            <td/>
+                                            <td/>
                                             <td/>
                                         </tr>
                                         </tbody>

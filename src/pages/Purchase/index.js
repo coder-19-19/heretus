@@ -25,8 +25,8 @@ const Branches = () => {
 
     const types = [
         {
-            value:1,
-            label:'Rəsmi',
+            value: 1,
+            label: 'Rəsmi',
         },
         {
             value: 2,
@@ -49,7 +49,7 @@ const Branches = () => {
     return (
         <div className="page-content">
             <ConfirmModal active={confirmModal} setActive={setConfirmModal} callback={deleteData}/>
-            <Modal size="lg" className="modal-dialog-centered" isOpen={form?.status}
+            <Modal size="xl" className="modal-dialog-centered" isOpen={form?.status}
                    toggle={() => setForm({})}>
                 <ModalHeader
                     toggle={() => setForm({})}>{form?.data ? 'Düzəliş et' : 'Əlavə et'}</ModalHeader>
