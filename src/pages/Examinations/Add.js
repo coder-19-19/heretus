@@ -73,7 +73,12 @@ const Add = ({fetchData, form, setData, data}) => {
 
     const fetchMissions = async () => {
         const {data} = await Missions.getSelect()
-        setMissions(data)
+        setMissions(data?.map(item => {
+            return {
+                ...item,
+                label:item?.is_product == 1 ? `${item?.label} (Qalıq ${item?.quantity})` : item?.label
+            }
+        }))
     }
 
     const fetchModalData = async () => {
